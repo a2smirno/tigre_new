@@ -142,14 +142,14 @@ do { \
 		float p2[2] 	={0,0};
 		float p3[2] 	={0,0};
 		
-    	float p0x 	= 0.0; 
-		float p0y 	= 0.0;
-		float p1x 	= 0.0;
-		float p1y 	= 0.0;
-		float p2x 	= 0.0;
-		float p2y 	= 0.0;
-		float p3x 	= 0.0;
-		float p3y 	= 0.0;
+    		float p0x[1] 	= 0.0; 
+		float p0y[1] 	= 0.0;
+		float p1x[1] 	= 0.0;
+		float p1y[1] 	= 0.0;
+		float p2x[1] 	= 0.0;
+		float p2y[1] 	= 0.0;
+		float p3x[1] 	= 0.0;
+		float p3y[1] 	= 0.0;
 		
 		if ( x - 1 >= 0 && x<cols)
 			
@@ -162,21 +162,21 @@ do { \
 		fvii[1] = v_old[idx+3*size3d+1] + 0.25 * ( v_old[idx+size3d+1] + v_old[idx+size3d+cols+1] + v_old[idx+size3d] + v_old[idx+size3d+cols] ) + 0.5 * ( v_old[idx+5*size3d+1] + v_old[idx+5*size3d+cols+1] ) ;
 		fvij[1] = v_old[idx+3*size3d-cols+1] + 0.25 * ( v_old[idx+size3d-cols+1] + v_old[idx+size3d+1] + v_old[idx+size3d-cols] + v_old[idx+size3d] ) + 0.5 * ( v_old[idx+5*size3d-cols+1] + v_old[idx+5*size3d+1] ) ;
 		
-		p0x = dfi[0] - fvi[0] + mu * phi_old[idx-1] ;
-		p0y = dfj[1] - fvi[1] + mu * phi_old[idx+size3d-cols] ;
-		p1x = df[0] - fv[0] + mu * phi_old[idx] ;
-		p1y = df[1] - fv[1] + mu * phi_old[idx+size3d] ;
-		p2x = dfij[0] - fvij[0] + mu * phi_old[idx+cols] ;
-		p2y = dfji[1] - fvii[1] + mu * phi_old[idx+size3d+1] ;
-		p3x = dfii[0] - fvii[0] + mu * phi_old[idx+cols-1] ;
-		p3y = dfjj[1] - fvij[1] + mu * phi_old[idx+size3d-cols+1] ;
+		p0x[0] = dfi[0] - fvi[0] + mu * phi_old[idx-1] ;
+		p0y[0] = dfj[1] - fvi[1] + mu * phi_old[idx+size3d-cols] ;
+		p1x[0] = df[0] - fv[0] + mu * phi_old[idx] ;
+		p1y[0] = df[1] - fv[1] + mu * phi_old[idx+size3d] ;
+		p2x[0] = dfij[0] - fvij[0] + mu * phi_old[idx+cols] ;
+		p2y[0] = dfji[1] - fvii[1] + mu * phi_old[idx+size3d+1] ;
+		p3x[0] = dfii[0] - fvii[0] + mu * phi_old[idx+cols-1] ;
+		p3y[0] = dfjj[1] - fvij[1] + mu * phi_old[idx+size3d-cols+1] ;
 		
-		p1[0] = p1x ;
-		p1[1] = 0.25 * ( p1y + p0y + p2y + p3y ) ;
-		p2[0] = 0.25 * ( p1x + p2x + p0x + p3x ) ;
-		p2[1] = p1y ;
-		p3[0] = 0.5 * ( p1x + p0x ) ;
-		p3[1] = 0.5 * ( p1y + p0y ) ;
+		p1[0] = p1x[0] ;
+		p1[1] = 0.25 * ( p1y[0] + p0y[0] + p2y[0] + p3y[0] ) ;
+		p2[0] = 0.25 * ( p1x[0] + p2x[0] + p0x[0] + p3x[0] ) ;
+		p2[1] = p1y[0] ;
+		p3[0] = 0.5 * ( p1x[0] + p0x[0] ) ;
+		p3[1] = 0.5 * ( p1y[0] + p0y[0] ) ;
 		
 		for(unsigned int i=0;i<2;i++){
 			v_new[i] 	= ( v_old[idx+i*size3d] + gamma * p1[i] ) * ( 1 - 1 / max(mu*sqrt(v_old[idx]*v_old[idx]+v_old[idx+size3d]*v_old[idx+size3d])/gamma, 1) ) ;
