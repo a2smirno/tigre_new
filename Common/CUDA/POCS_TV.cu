@@ -151,6 +151,24 @@ do { \
 		float p3x[1] 	= 0.0;
 		float p3y[1] 	= 0.0;
 		
+		float dfi0 = dfi[0];
+		float df0 = df[0];
+		float df1 = df[1];
+		float dfij0 = dfij[0];
+		float dfji1 = dfji[1];
+		float dfii0 = dfii[0];
+		float dfjj1 = dfjj[1];
+		
+		float phi_old0x = phi_old[idx-1];
+		float phi_old0y = phi_old[idx+size3d-cols];
+		float phi_old1x = phi_old[idx];
+		float phi_old1y = phi_old[idx+size3d];
+		
+		float phi_old2x = phi_old[idx+cols];
+		float phi_old2y = phi_old[idx+size3d+1];
+		float phi_old3x = phi_old[idx+cols-1];
+		float phi_old3y = phi_old[idx+size3d-cols+1];
+		
 		if ( x - 1 >= 0 && x<cols)
 			
 		fv[0] = v_old[idx] + 0.25 * ( v_old[idx+2*size3d] + v_old[idx+2*size3d-cols] + v_old[idx+2*size3d+1] + v_old[idx+2*size3d-cols+1] ) + 0.5 * ( v_old[idx+4*size3d] + v_old[idx+4*size3d+1] ) ;
@@ -162,14 +180,14 @@ do { \
 		fvii[1] = v_old[idx+3*size3d+1] + 0.25 * ( v_old[idx+size3d+1] + v_old[idx+size3d+cols+1] + v_old[idx+size3d] + v_old[idx+size3d+cols] ) + 0.5 * ( v_old[idx+5*size3d+1] + v_old[idx+5*size3d+cols+1] ) ;
 		fvij[1] = v_old[idx+3*size3d-cols+1] + 0.25 * ( v_old[idx+size3d-cols+1] + v_old[idx+size3d+1] + v_old[idx+size3d-cols] + v_old[idx+size3d] ) + 0.5 * ( v_old[idx+5*size3d-cols+1] + v_old[idx+5*size3d+1] ) ;
 		
-		p0x[0] = dfi[0] - fvi[0] + mu * phi_old[idx-1] ;
-		p0y[0] = dfj[1] - fvi[1] + mu * phi_old[idx+size3d-cols] ;
-		p1x[0] = df[0] - fv[0] + mu * phi_old[idx] ;
-		p1y[0] = df[1] - fv[1] + mu * phi_old[idx+size3d] ;
-		p2x[0] = dfij[0] - fvij[0] + mu * phi_old[idx+cols] ;
-		p2y[0] = dfji[1] - fvii[1] + mu * phi_old[idx+size3d+1] ;
-		p3x[0] = dfii[0] - fvii[0] + mu * phi_old[idx+cols-1] ;
-		p3y[0] = dfjj[1] - fvij[1] + mu * phi_old[idx+size3d-cols+1] ;
+		p0x[0] = dfi0 - fvi[0] + mu * phi_old0x ;
+		p0y[0] = dfj1 - fvi[1] + mu * phi_old0y ;
+		p1x[0] = df0 - fv[0] + mu * phi_old1x ;
+		p1y[0] = df1 - fv[1] + mu * phi_old1y ;
+		p2x[0] = dfij0 - fvij[0] + mu * phi_old2x ;
+		p2y[0] = dfji1 - fvii[1] + mu * phi_old2y ;
+		p3x[0] = dfii0 - fvii[0] + mu * phi_old3x ;
+		p3y[0] = dfjj1 - fvij[1] + mu * phi_old3y ;
 		
 		p1[0] = p1x[0] ;
 		p1[1] = 0.25 * ( p1y[0] + p0y[0] + p2y[0] + p3y[0] ) ;
