@@ -142,6 +142,15 @@ do { \
 		float p2[2] 	={0,0};
 		float p3[2] 	={0,0};
 		
+    	float p0x[1] 	={0}; 
+		float p0y[1] 	={0};
+		float p1x[1] 	={0};
+		float p1y[1] 	={0};
+		float p2x[1] 	={0};
+		float p2y[1] 	={0};
+		float p3x[1] 	={0};
+		float p3y[1] 	={0};
+		
 		if ( x - 1 >= 0 && x<cols)
 			
 		fv[0] = v_old[idx] + 0.25 * ( v_old[idx+2*size3d] + v_old[idx+2*size3d-cols] + v_old[idx+2*size3d+1] + v_old[idx+2*size3d-cols+1] ) + 0.5 * ( v_old[idx+4*size3d] + v_old[idx+4*size3d+1] ) ;
