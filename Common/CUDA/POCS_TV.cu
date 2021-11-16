@@ -169,6 +169,33 @@ do { \
 		float phi_old3x = phi_old[idx+cols-1];
 		float phi_old3y = phi_old[idx+size3d-cols+1];
 		
+		float vold00 = v_old[idx] 
+		float vold01 = v_old[idx+2*size3d];
+		float vold02 = v_old[idx+2*size3d-cols];
+		float vold03 = v_old[idx+2*size3d+1];
+		float vold04 = v_old[idx+2*size3d-cols+1];
+		float vold05 = v_old[idx+4*size3d];
+		float vold06 = v_old[idx+4*size3d+1];
+		
+		float vold10 = v_old[idx+3*size3d];
+		float vold11 = v_old[idx+size3d];
+		float vold12 = v_old[idx+size3d+cols];
+		float vold13 = v_old[idx+size3d-1];
+		float vold14 = v_old[idx+size3d+cols-1];
+		float vold15 = v_old[idx+5*size3d];
+		float vold16 = v_old[idx+5*size3d+cols];
+		
+		float fvi[0] = v_old[idx-1] + 0.25 * ( v_old[idx+2*size3d-1] + v_old[idx+2*size3d-cols-1] + v_old[idx+2*size3d] + v_old[idx+2*size3d-cols] ) + 0.5 * ( v_old[idx+4*size3d-1] + v_old[idx+4*size3d] ) ;
+		float fvi[1] = v_old[idx+3*size3d-cols] + 0.25 * ( v_old[idx+size3d-cols] + v_old[idx+size3d] + v_old[idx+size3d-cols-1] + v_old[idx+size3d-1] ) + 0.5 * ( v_old[idx+5*size3d-cols] + v_old[idx+5*size3d] ) ;
+		float fvii[0] = v_old[idx+cols-1] + 0.25 * ( v_old[idx+2*size3d+cols-1] + v_old[idx+2*size3d-1] + v_old[idx+2*size3d+cols] + v_old[idx+2*size3d] ) + 0.5 * ( v_old[idx+4*size3d+cols-1] + v_old[idx+4*size3d+cols] ) ; 
+		float fvij[0] = v_old[idx+cols] + 0.25 * ( v_old[idx+2*size3d+cols] + v_old[idx+2*size3d] + v_old[idx+2*size3d+cols+1] + v_old[idx+2*size3d+1] ) + 0.5 * ( v_old[idx+4*size3d+cols] + v_old[idx+4*size3d+cols+1] ) ; 
+		float fvii[1] = v_old[idx+3*size3d+1] + 0.25 * ( v_old[idx+size3d+1] + v_old[idx+size3d+cols+1] + v_old[idx+size3d] + v_old[idx+size3d+cols] ) + 0.5 * ( v_old[idx+5*size3d+1] + v_old[idx+5*size3d+cols+1] ) ;
+		float fvij[1] = v_old[idx+3*size3d-cols+1] + 0.25 * ( v_old[idx+size3d-cols+1] + v_old[idx+size3d+1] + v_old[idx+size3d-cols] + v_old[idx+size3d] ) + 0.5 * ( v_old[idx+5*size3d-cols+1] + v_old[idx+5*size3d+1] ) ;
+		
+		float v_new[i] 	= ( v_old[idx+i*size3d] + gamma * p1[i] ) * ( 1 - 1 / max(mu*sqrt(v_old[idx]*v_old[idx]+v_old[idx+size3d]*v_old[idx+size3d])/gamma, 1) ) ;
+		float v_new[i+2] = ( v_old[idx+(i+2)*size3d] + gamma * p2[i] ) * ( 1 - 1 / max(mu*sqrt(v_old[idx+2*size3d]*v_old[idx+2*size3d]+v_old[idx+3*size3d]*v_old[idx+3*size3d])/gamma, 1) ) ;
+		float v_new[i+4] = ( v_old[idx+(i+4)*size3d] + gamma * p3[i] ) * ( 1 - 1 / max(mu*sqrt(v_old[idx+4*size3d]*v_old[idx+4*size3d]+v_old[idx+5*size3d]*v_old[idx+5*size3d])/gamma, 1) ) ;
+		
 		if ( x - 1 >= 0 && x<cols)
 			
 		fv[0] = v_old[idx] + 0.25 * ( v_old[idx+2*size3d] + v_old[idx+2*size3d-cols] + v_old[idx+2*size3d+1] + v_old[idx+2*size3d-cols+1] ) + 0.5 * ( v_old[idx+4*size3d] + v_old[idx+4*size3d+1] ) ;
