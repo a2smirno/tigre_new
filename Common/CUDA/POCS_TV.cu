@@ -142,14 +142,14 @@ do { \
 		float p2[2] 	={0,0};
 		float p3[2] 	={0,0};
 		
-    	float p0x[1] 	={0}; 
-		float p0y[1] 	={0};
-		float p1x[1] 	={0};
-		float p1y[1] 	={0};
-		float p2x[1] 	={0};
-		float p2y[1] 	={0};
-		float p3x[1] 	={0};
-		float p3y[1] 	={0};
+    	float p0x 	= 0.0; 
+		float p0y 	= 0.0;
+		float p1x 	= 0.0;
+		float p1y 	= 0.0;
+		float p2x 	= 0.0;
+		float p2y 	= 0.0;
+		float p3x 	= 0.0;
+		float p3y 	= 0.0;
 		
 		if ( x - 1 >= 0 && x<cols)
 			
