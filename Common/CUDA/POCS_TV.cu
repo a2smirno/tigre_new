@@ -134,22 +134,22 @@ do { \
 		if ( x >= cols || y >= rows || z >= depth || x < 1 || y < 1 || z < 1 )
             return;
 		
-		float fv[2] 	={0,0}; 
-		float fvi[2] 	={0,0};
-		float fvii[2] 	={0,0};
-		float fvij[2] 	={0,0};
-		float p1[2] 	={0,0};
-		float p2[2] 	={0,0};
-		float p3[2] 	={0,0};
+		float fv[2] 	= {0}; 
+		float fvi[2] 	= {0};
+		float fvii[2] 	= {0};
+		float fvij[2] 	= {0};
+		float p1[2] 	= {0};
+		float p2[2] 	= {0};
+		float p3[2] 	= {0};
 		
-    		float p0x[1] 	= 0.0; 
-		float p0y[1] 	= 0.0;
-		float p1x[1] 	= 0.0;
-		float p1y[1] 	= 0.0;
-		float p2x[1] 	= 0.0;
-		float p2y[1] 	= 0.0;
-		float p3x[1] 	= 0.0;
-		float p3y[1] 	= 0.0;
+    		float p0x[1] 	= {0}; 
+		float p0y[1] 	= {0};
+		float p1x[1] 	= {0};
+		float p1y[1] 	= {0};
+		float p2x[1] 	= {0};
+		float p2y[1] 	= {0};
+		float p3x[1] 	= {0};
+		float p3y[1] 	= {0};
 		
 		float dfi0 = dfi[0];
 		float df0 = df[0];
@@ -235,14 +235,14 @@ do { \
 		
 		if ( x - 1 >= 0 && x<cols)
 			
-		fv[0] = v_old00 + 0.25 * ( v_old01 + v_old02 + v_old03 + v_old04 ) + 0.5 * ( v_old05 + v_old06 ) ;
-		fv[1] = v_old10 + 0.25 * ( v_old11 + v_old12 + v_old13 + v_old14 ) + 0.5 * ( v_old15 + v_old16 ) ; 
-		fvi[0] = v_old20 + 0.25 * ( v_old21 + v_old22 + v_old23 + v_old24 ) + 0.5 * ( v_old25 + v_old26 ) ;
-		fvi[1] = v_old30 + 0.25 * ( v_old31 + v_old32 + v_old33 + v_old34 ) + 0.5 * ( v_old35 + v_old36 ) ;
-		fvii[0] = v_old40 + 0.25 * ( v_old41 + v_old42 + v_old43 + v_old44 ) + 0.5 * ( v_old45 + v_old46 ) ; 
-		fvij[0] = v_old50 + 0.25 * ( v_old51 + v_old52 + v_old53 + v_old54 ) + 0.5 * ( v_old55 + v_old56 ) ; 
-		fvii[1] = v_old60 + 0.25 * ( v_old61 + v_old62 + v_old63 + v_old64 ) + 0.5 * ( v_old65 + v_old66 ) ;
-		fvij[1] = v_old70 + 0.25 * ( v_old71 + v_old72 + v_old73 + v_old74 ) + 0.5 * ( v_old75 + v_old76 ) ;
+		fv[0] 	= vold00 + 0.25 * ( vold01 + vold02 + vold03 + vold04 ) + 0.5 * ( vold05 + vold06 ) ;
+		fv[1] 	= vold10 + 0.25 * ( vold11 + vold12 + vold13 + vold14 ) + 0.5 * ( vold15 + vold16 ) ; 
+		fvi[0] 	= vold20 + 0.25 * ( vold21 + vold22 + vold23 + vold24 ) + 0.5 * ( vold25 + vold26 ) ;
+		fvi[1] 	= vold30 + 0.25 * ( vold31 + vold32 + vold33 + vold34 ) + 0.5 * ( vold35 + vold36 ) ;
+		fvii[0] = vold40 + 0.25 * ( vold41 + vold42 + vold43 + vold44 ) + 0.5 * ( vold45 + vold46 ) ; 
+		fvij[0] = vold50 + 0.25 * ( vold51 + vold52 + vold53 + vold54 ) + 0.5 * ( vold55 + vold56 ) ; 
+		fvii[1] = vold60 + 0.25 * ( vold61 + vold62 + vold63 + vold64 ) + 0.5 * ( vold65 + vold66 ) ;
+		fvij[1] = vold70 + 0.25 * ( vold71 + vold72 + vold73 + vold74 ) + 0.5 * ( vold75 + vold76 ) ;
 		
 		p0x[0] = dfi0 - fvi[0] + mu * phi_old0x ;
 		p0y[0] = dfj1 - fvi[1] + mu * phi_old0y ;
