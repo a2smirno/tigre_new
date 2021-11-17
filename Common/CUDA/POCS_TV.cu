@@ -152,6 +152,7 @@ do { \
 		float p3y[1] 	= {0};
 		
 		float dfi0 = dfi[0];
+		float dfj1 = dfj[1]; 
 		float df0 = df[0];
 		float df1 = df[1];
 		float dfij0 = dfij[0];
@@ -260,13 +261,13 @@ do { \
 		p3[0] = 0.5 * ( p1x[0] + p0x[0] ) ;
 		p3[1] = 0.5 * ( p1y[0] + p0y[0] ) ;
 		
-		v_new[0] = ( v_old00 + gamma * p1[0] ) * ( 1 - 1 / max(mu*sqrt(v_old00*v_old00+v_old11*v_old11)/gamma, 1) ) ;
-		v_new[2] = ( v_old01 + gamma * p2[0] ) * ( 1 - 1 / max(mu*sqrt(v_old01*v_old01+v_old10*v_old10)/gamma, 1) ) ;
-		v_new[4] = ( v_old05 + gamma * p3[0] ) * ( 1 - 1 / max(mu*sqrt(v_old05*v_old05+v_old15*v_old15)/gamma, 1) ) ;
+		v_new[0] = ( vold00 + gamma * p1[0] ) * ( 1 - 1 / max(mu*sqrt(vold00*vold00+vold11*vold11)/gamma, 1) ) ;
+		v_new[2] = ( vold01 + gamma * p2[0] ) * ( 1 - 1 / max(mu*sqrt(vold01*vold01+vold10*vold10)/gamma, 1) ) ;
+		v_new[4] = ( vold05 + gamma * p3[0] ) * ( 1 - 1 / max(mu*sqrt(vold05*vold05+vold15*vold15)/gamma, 1) ) ;
 		
-		v_new[1] = ( v_old11 + gamma * p1[1] ) * ( 1 - 1 / max(mu*sqrt(v_old00*v_old00+v_old11*v_old11)/gamma, 1) ) ;
-		v_new[3] = ( v_old10 + gamma * p2[1] ) * ( 1 - 1 / max(mu*sqrt(v_old01*v_old01+v_old10*v_old10)/gamma, 1) ) ;
-		v_new[5] = ( v_old15 + gamma * p3[1] ) * ( 1 - 1 / max(mu*sqrt(v_old05*v_old05+v_old15*v_old15)/gamma, 1) ) ;
+		v_new[1] = ( vold11 + gamma * p1[1] ) * ( 1 - 1 / max(mu*sqrt(vold00*vold00+vold11*vold11)/gamma, 1) ) ;
+		v_new[3] = ( vold10 + gamma * p2[1] ) * ( 1 - 1 / max(mu*sqrt(vold01*vold01+vold10*vold10)/gamma, 1) ) ;
+		v_new[5] = ( vold15 + gamma * p3[1] ) * ( 1 - 1 / max(mu*sqrt(vold05*vold05+vold15*vold15)/gamma, 1) ) ;
 		
 		__syncthreads();
 	}
