@@ -116,7 +116,7 @@ do { \
     
 	__device__ __inline__
             void apgm_v(const float* phi_old, 
-			const float* v_old, float *v_new,
+			const float* v_old, float* v_new,
 			const float* df, const float *dfi,
 			const float *dfj, const float *dfii,
 			const float *dfjj, const float *dfij,
@@ -273,7 +273,7 @@ do { \
 	}
 	
 	__device__ __inline__
-            void apgm_phi(const float* phi_old, float *phi_new,
+            void apgm_phi(const float* phi_old, float* phi_new,
 			const float* v_new,
 			const float* df,
             long z, long y, long x,
@@ -338,11 +338,11 @@ do { \
 		v[idx + 3*size3d] = df[1]; // assign df2 to v2y
 		
 		for(unsigned int i=0;i<maxIter;i++){
-			apgm_v(phi,v,v_new,df,z,y,x,depth,rows,cols); // perform one step of the algorithm
+			apgm_v(phi,v,v_new,df,dfi,dfj,dfii,dfjj,dfij,dfji,z,y,x,depth,rows,cols); // perform one step of the algorithm
 			for(unsigned int j=0;j<6;j++){
 				v[idx + j*size3d] = v_new[j];
 			}
-			apgm_phi(phi,phi_new,v,df,z,y,x, depth,rows,cols);
+			apgm_phi(phi,phi_new,v,df,z,y,x,depth,rows,cols);
 			phi[idx] = phi_new[0];
 			phi[idx] = phi_new[1];
 		}
