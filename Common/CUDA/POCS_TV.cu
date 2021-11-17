@@ -260,11 +260,13 @@ do { \
 		p3[0] = 0.5 * ( p1x[0] + p0x[0] ) ;
 		p3[1] = 0.5 * ( p1y[0] + p0y[0] ) ;
 		
-		for(unsigned int i=0;i<2;i++){
-			v_new[i] 	= ( v_old[idx+i*size3d] + gamma * p1[i] ) * ( 1 - 1 / max(mu*sqrt(v_old[idx]*v_old[idx]+v_old[idx+size3d]*v_old[idx+size3d])/gamma, 1) ) ;
-			v_new[i+2] = ( v_old[idx+(i+2)*size3d] + gamma * p2[i] ) * ( 1 - 1 / max(mu*sqrt(v_old[idx+2*size3d]*v_old[idx+2*size3d]+v_old[idx+3*size3d]*v_old[idx+3*size3d])/gamma, 1) ) ;
-			v_new[i+4] = ( v_old[idx+(i+4)*size3d] + gamma * p3[i] ) * ( 1 - 1 / max(mu*sqrt(v_old[idx+4*size3d]*v_old[idx+4*size3d]+v_old[idx+5*size3d]*v_old[idx+5*size3d])/gamma, 1) ) ;
-		}
+		v_new[0] = ( v_old00 + gamma * p1[0] ) * ( 1 - 1 / max(mu*sqrt(v_old00*v_old00+v_old11*v_old11)/gamma, 1) ) ;
+		v_new[2] = ( v_old01 + gamma * p2[0] ) * ( 1 - 1 / max(mu*sqrt(v_old01*v_old01+v_old10*v_old10)/gamma, 1) ) ;
+		v_new[4] = ( v_old05 + gamma * p3[0] ) * ( 1 - 1 / max(mu*sqrt(v_old05*v_old05+v_old15*v_old15)/gamma, 1) ) ;
+		
+		v_new[1] = ( v_old11 + gamma * p1[1] ) * ( 1 - 1 / max(mu*sqrt(v_old00*v_old00+v_old11*v_old11)/gamma, 1) ) ;
+		v_new[3] = ( v_old10 + gamma * p2[1] ) * ( 1 - 1 / max(mu*sqrt(v_old01*v_old01+v_old10*v_old10)/gamma, 1) ) ;
+		v_new[5] = ( v_old15 + gamma * p3[1] ) * ( 1 - 1 / max(mu*sqrt(v_old05*v_old05+v_old15*v_old15)/gamma, 1) ) ;
 		
 		__syncthreads();
 	}
