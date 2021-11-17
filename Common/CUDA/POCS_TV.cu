@@ -169,7 +169,7 @@ do { \
 		float phi_old3x = phi_old[idx+cols-1];
 		float phi_old3y = phi_old[idx+size3d-cols+1];
 		
-		float vold00 = v_old[idx] 
+		float vold00 = v_old[idx]; 
 		float vold01 = v_old[idx+2*size3d];
 		float vold02 = v_old[idx+2*size3d-cols];
 		float vold03 = v_old[idx+2*size3d+1];
@@ -235,14 +235,14 @@ do { \
 		
 		if ( x - 1 >= 0 && x<cols)
 			
-		fv[0] = v_old[idx] + 0.25 * ( v_old[idx+2*size3d] + v_old[idx+2*size3d-cols] + v_old[idx+2*size3d+1] + v_old[idx+2*size3d-cols+1] ) + 0.5 * ( v_old[idx+4*size3d] + v_old[idx+4*size3d+1] ) ;
-		fv[1] = v_old[idx+3*size3d] + 0.25 * ( v_old[idx+size3d] + v_old[idx+size3d+cols] + v_old[idx+size3d-1] + v_old[idx+size3d+cols-1] ) + 0.5 * ( v_old[idx+5*size3d] + v_old[idx+5*size3d+cols] ) ; 
-		fvi[0] = v_old[idx-1] + 0.25 * ( v_old[idx+2*size3d-1] + v_old[idx+2*size3d-cols-1] + v_old[idx+2*size3d] + v_old[idx+2*size3d-cols] ) + 0.5 * ( v_old[idx+4*size3d-1] + v_old[idx+4*size3d] ) ;
-		fvi[1] = v_old[idx+3*size3d-cols] + 0.25 * ( v_old[idx+size3d-cols] + v_old[idx+size3d] + v_old[idx+size3d-cols-1] + v_old[idx+size3d-1] ) + 0.5 * ( v_old[idx+5*size3d-cols] + v_old[idx+5*size3d] ) ;
-		fvii[0] = v_old[idx+cols-1] + 0.25 * ( v_old[idx+2*size3d+cols-1] + v_old[idx+2*size3d-1] + v_old[idx+2*size3d+cols] + v_old[idx+2*size3d] ) + 0.5 * ( v_old[idx+4*size3d+cols-1] + v_old[idx+4*size3d+cols] ) ; 
-		fvij[0] = v_old[idx+cols] + 0.25 * ( v_old[idx+2*size3d+cols] + v_old[idx+2*size3d] + v_old[idx+2*size3d+cols+1] + v_old[idx+2*size3d+1] ) + 0.5 * ( v_old[idx+4*size3d+cols] + v_old[idx+4*size3d+cols+1] ) ; 
-		fvii[1] = v_old[idx+3*size3d+1] + 0.25 * ( v_old[idx+size3d+1] + v_old[idx+size3d+cols+1] + v_old[idx+size3d] + v_old[idx+size3d+cols] ) + 0.5 * ( v_old[idx+5*size3d+1] + v_old[idx+5*size3d+cols+1] ) ;
-		fvij[1] = v_old[idx+3*size3d-cols+1] + 0.25 * ( v_old[idx+size3d-cols+1] + v_old[idx+size3d+1] + v_old[idx+size3d-cols] + v_old[idx+size3d] ) + 0.5 * ( v_old[idx+5*size3d-cols+1] + v_old[idx+5*size3d+1] ) ;
+		fv[0] = v_old00 + 0.25 * ( v_old01 + v_old02 + v_old03 + v_old04 ) + 0.5 * ( v_old05 + v_old06 ) ;
+		fv[1] = v_old10 + 0.25 * ( v_old11 + v_old12 + v_old13 + v_old14 ) + 0.5 * ( v_old15 + v_old16 ) ; 
+		fvi[0] = v_old20 + 0.25 * ( v_old21 + v_old22 + v_old23 + v_old24 ) + 0.5 * ( v_old25 + v_old26 ) ;
+		fvi[1] = v_old30 + 0.25 * ( v_old31 + v_old32 + v_old33 + v_old34 ) + 0.5 * ( v_old35 + v_old36 ) ;
+		fvii[0] = v_old40 + 0.25 * ( v_old41 + v_old42 + v_old43 + v_old44 ) + 0.5 * ( v_old45 + v_old46 ) ; 
+		fvij[0] = v_old50 + 0.25 * ( v_old51 + v_old52 + v_old53 + v_old54 ) + 0.5 * ( v_old55 + v_old56 ) ; 
+		fvii[1] = v_old60 + 0.25 * ( v_old61 + v_old62 + v_old63 + v_old64 ) + 0.5 * ( v_old65 + v_old66 ) ;
+		fvij[1] = v_old70 + 0.25 * ( v_old71 + v_old72 + v_old73 + v_old74 ) + 0.5 * ( v_old75 + v_old76 ) ;
 		
 		p0x[0] = dfi0 - fvi[0] + mu * phi_old0x ;
 		p0y[0] = dfj1 - fvi[1] + mu * phi_old0y ;
