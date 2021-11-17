@@ -288,7 +288,7 @@ do { \
 		if ( x >= cols || y >= rows || z >= depth || x < 1 || y < 1 || z < 1 )
             return;
 		
-		float fv[2] 	={0,0}; 
+		float fv[2] 	={0}; 
 				
 		fv[0] = v_new[idx] + 0.25 * ( v_new[idx+2*size3d] + v_new[idx+2*size3d-cols] + v_new[idx+2*size3d+1] + v_new[idx+2*size3d-cols+1] ) + 0.5 * ( v_new[idx+4*size3d] + v_new[idx+4*size3d+1] ) ;
 		fv[1] = v_new[idx+3*size3d] + 0.25 * ( v_new[idx+size3d] + v_new[idx+size3d+cols] + v_new[idx+size3d-1] + v_new[idx+size3d+cols-1] ) + 0.5 * ( v_new[idx+5*size3d] + v_new[idx+5*size3d+cols] ) ; 
@@ -305,21 +305,21 @@ do { \
         unsigned long z = threadIdx.z + blockIdx.z * blockDim.z;
         unsigned long long idx = z * rows * cols + y * cols + x;
 		unsigned long size3d = depth * rows * cols + rows * cols + cols;
-		unsigned long maxIter = 270;
+		unsigned int maxIter = 270;
 		
         if ( x >= cols || y >= rows || z >= depth || x < 1 || y < 1 || z < 1 )
             return;
         
-		float phi_new[2]={0,0};
-		float df[3] 	={0,0,0}; // df == \partial f_{i,j,k}
-		float dfi[3] 	={0,0,0};
-		float dfj[3] 	={0,0,0}; 
-		float dfii[3] 	={0,0,0};
-		float dfjj[3] 	={0,0,0};
-		float dfij[3] 	={0,0,0};
-		float dfji[3] 	={0,0,0};
-		float val[4]	={0,0,0,0};
-		float v_new[2] 	={0,0,0,0,0,0};
+		float phi_new[2]= {0};
+		float df[3] 	= {0}; // df == \partial f_{i,j,k}
+		float dfi[3] 	= {0};
+		float dfj[3] 	= {0}; 
+		float dfii[3] 	= {0};
+		float dfjj[3] 	= {0};
+		float dfij[3] 	= {0};
+		float dfji[3] 	= {0};
+		float val[4]	= {0};
+		float v_new[6] 	= {0};
         
 		gradient(f,df    ,z  ,y  ,x  , depth,rows,cols);
 		gradient(f,dfi   ,z  ,y  ,x-1, depth,rows,cols);
@@ -334,7 +334,7 @@ do { \
 		for(unsigned int i=0;i<6;i++){
 			v[idx + i*size3d] = 0;
 		}
-	    v[idx] = df[0]; // assign df1 to v1x
+	    	v[idx] = df[0]; // assign df1 to v1x
 		v[idx + 3*size3d] = df[1]; // assign df2 to v2y
 		
 		for(unsigned int i=0;i<maxIter;i++){
