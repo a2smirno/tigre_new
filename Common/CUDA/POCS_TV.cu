@@ -261,13 +261,13 @@ do { \
 		p3[0] = 0.5 * ( p1x[0] + p0x[0] ) ;
 		p3[1] = 0.5 * ( p1y[0] + p0y[0] ) ;
 		
-		v_new[0] = ( vold00 + gamma * p1[0] ) * ( 1 - 1 / max(mu*sqrt(vold00*vold00+vold11*vold11)/gamma, 1) ) ;
-		v_new[2] = ( vold01 + gamma * p2[0] ) * ( 1 - 1 / max(mu*sqrt(vold01*vold01+vold10*vold10)/gamma, 1) ) ;
-		v_new[4] = ( vold05 + gamma * p3[0] ) * ( 1 - 1 / max(mu*sqrt(vold05*vold05+vold15*vold15)/gamma, 1) ) ;
+		v_new[0] = ( vold00 + gamma * p1[0] ) * ( 1 - 1 / max(mu*sqrt(vold00*vold00+vold11*vold11)/gamma, 1.0) ) ;
+		v_new[2] = ( vold01 + gamma * p2[0] ) * ( 1 - 1 / max(mu*sqrt(vold01*vold01+vold10*vold10)/gamma, 1.0) ) ;
+		v_new[4] = ( vold05 + gamma * p3[0] ) * ( 1 - 1 / max(mu*sqrt(vold05*vold05+vold15*vold15)/gamma, 1.0) ) ;
 		
-		v_new[1] = ( vold11 + gamma * p1[1] ) * ( 1 - 1 / max(mu*sqrt(vold00*vold00+vold11*vold11)/gamma, 1) ) ;
-		v_new[3] = ( vold10 + gamma * p2[1] ) * ( 1 - 1 / max(mu*sqrt(vold01*vold01+vold10*vold10)/gamma, 1) ) ;
-		v_new[5] = ( vold15 + gamma * p3[1] ) * ( 1 - 1 / max(mu*sqrt(vold05*vold05+vold15*vold15)/gamma, 1) ) ;
+		v_new[1] = ( vold11 + gamma * p1[1] ) * ( 1 - 1 / max(mu*sqrt(vold00*vold00+vold11*vold11)/gamma, 1.0) ) ;
+		v_new[3] = ( vold10 + gamma * p2[1] ) * ( 1 - 1 / max(mu*sqrt(vold01*vold01+vold10*vold10)/gamma, 1.0) ) ;
+		v_new[5] = ( vold15 + gamma * p3[1] ) * ( 1 - 1 / max(mu*sqrt(vold05*vold05+vold15*vold15)/gamma, 1.0) ) ;
 		
 		__syncthreads();
 	}
@@ -289,11 +289,32 @@ do { \
             return;
 		
 		float fv[2] 	={0}; 
-				
-		fv[0] = v_new[idx] + 0.25 * ( v_new[idx+2*size3d] + v_new[idx+2*size3d-cols] + v_new[idx+2*size3d+1] + v_new[idx+2*size3d-cols+1] ) + 0.5 * ( v_new[idx+4*size3d] + v_new[idx+4*size3d+1] ) ;
-		fv[1] = v_new[idx+3*size3d] + 0.25 * ( v_new[idx+size3d] + v_new[idx+size3d+cols] + v_new[idx+size3d-1] + v_new[idx+size3d+cols-1] ) + 0.5 * ( v_new[idx+5*size3d] + v_new[idx+5*size3d+cols] ) ; 
-		phi_new[0] = phi_old[idx] + mu * ( df[0] - fv[0] ) ;
-		phi_new[1] = phi_old[idx+size3d] + mu * ( df[1] - fv[1] ) ;
+		
+		float vnew00 = v_new[idx]; 
+		float vnew01 = v_new[idx+2*size3d];
+		float vnew02 = v_new[idx+2*size3d-cols];
+		float vnew03 = v_new[idx+2*size3d+1];
+		float vnew04 = v_new[idx+2*size3d-cols+1];
+		float vnew05 = v_new[idx+4*size3d];
+		float vnew06 = v_new[idx+4*size3d+1];
+		
+		float vnew10 = v_new[idx+3*size3d]; 
+		float vnew11 = v_new[idx+size3d];
+		float vnew12 = v_new[idx+size3d+cols];
+		float vnew13 = v_new[idx+size3d-1];
+		float vnew14 = v_new[idx+size3d+cols-1];
+		float vnew15 = v_new[idx+5*size3d];
+		float vnew16 = v_new[idx+5*size3d+cols];
+		
+		float df0 = df[0];
+		float df1 = df[1];
+		float phiold0 = phi_old[idx];
+		float phiold1 = phi_old[idx+size3d];
+		
+		fv[0] = vnew00 + 0.25 * ( vnew01 + vnew02 + vnew03 + vnew04 ) + 0.5 * ( vnew05 + vnew06 ) ;
+		fv[1] = vnew10 + 0.25 * ( vnew11 + vnew12 + vnew13 + vnew14 ) + 0.5 * ( vnew15 + vnew16 ) ; 
+		phi_new[0] = phiold0 + mu * ( df0 - fv[0] ) ;
+		phi_new[1] = phiold1 + mu * ( df1 - fv[1] ) ;
 		
 		__syncthreads();
 	}
