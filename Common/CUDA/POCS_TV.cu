@@ -415,13 +415,12 @@ do { \
             sdata[tid] += sdata[tid + 64];
         __syncthreads();
         
-        
-#if (__CUDA_ARCH__ >= 300)
+#if (__CUDART_VERSION >= 9000)
         if ( tid < 32 )
         {
             mySum = sdata[tid] + sdata[tid + 32];
             for (int offset = warpSize/2; offset > 0; offset /= 2) {
-                mySum += __shfl_down(mySum, offset);
+                mySum += __shfl_down_sync(0xFFFFFFFF, mySum, offset,32);
             }
         }
 #else
@@ -430,7 +429,8 @@ do { \
             mySum = sdata[0];
         }
 #endif
-        if (tid == 0) g_odata[blockIdx.x] = mySum;
+
+	if (tid == 0) g_odata[blockIdx.x] = mySum;
     }
     __global__ void  reduceSum(float *g_idata, float *g_odata, size_t n){
         extern __shared__ volatile float sdata[];
@@ -461,13 +461,12 @@ do { \
             sdata[tid] += sdata[tid + 64];
         __syncthreads();
         
-        
-#if (__CUDA_ARCH__ >= 300)
+#if (__CUDART_VERSION >= 9000)
         if ( tid < 32 )
         {
             mySum = sdata[tid] + sdata[tid + 32];
             for (int offset = warpSize/2; offset > 0; offset /= 2) {
-                mySum += __shfl_down(mySum, offset);
+                mySum += __shfl_down_sync(0xFFFFFFFF, mySum, offset,32);
             }
         }
 #else
@@ -477,10 +476,7 @@ do { \
         }
 #endif
         if (tid == 0) g_odata[blockIdx.x] = mySum;
-    }
-    
-    
-    
+    }        
     
 // main function
  void pocs_tv(const float* img,float* dst,float alpha,const long* image_size, int maxIter){
