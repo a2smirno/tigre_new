@@ -52,9 +52,10 @@ Codes  : https://github.com/CERN/TIGRE
 
 
 #define MAXTHREADS 1024
+#define MAX_BUFFER 60
 
 #include "POCS_TV.hpp"
-
+#include "gpuUtils.hpp"
 
 
 
@@ -62,8 +63,9 @@ Codes  : https://github.com/CERN/TIGRE
 do { \
         cudaError_t __err = cudaGetLastError(); \
         if (__err != cudaSuccess) { \
-                mexPrintf("ERROR in: %s \n",msg);\
-                mexErrMsgIdAndTxt("err",cudaGetErrorString(__err));\
+                mexPrintf("%s \n",msg);\
+                cudaDeviceReset();\
+                mexErrMsgIdAndTxt("POCS_TV:GPU",cudaGetErrorString(__err));\
         } \
 } while (0)
     
